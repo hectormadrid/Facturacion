@@ -13,15 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('factura_items', function (Blueprint $table) {
+        Schema::create('facturas', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('factura_id')->constrained();
-            $table->foreignId('producto_id')->constrained();
-            $table->integer('cantidad');
-            $table->decimal('precio_unitario', 8, 2);
-            $table->decimal('subtotal', 8, 2);
+            $table->unsignedBigInteger('cliente_id');
+            $table->date('fecha');
+            $table->decimal('total', 10, 2);
             $table->timestamps();
         });
+        
     }
 
     /**

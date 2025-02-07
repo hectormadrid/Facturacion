@@ -17,10 +17,23 @@ use App\Http\Controllers\FacturaController;
 */
 
 Route::get('/', function () {
-    return view('index');
+    return view('welcome');
 });
+
+Route::get('/Cliente', function () {
+    return view('Cliente.create');
+});
+Route::get('/Producto', function () {
+    return view('Producto.create');
+});
+Route::get('/Cliente/create', [ClienteController::class, 'create'])->name('Cliente.create');
+
+Route::post('/Cliente', [ClienteController::class, 'store'])->name('Cliente.store');
+
+Route::get('/Producto/create', [ProductoController::class, 'create'])->name('Producto.create');
+Route::post('/Productos', [ProductoController::class, 'store'])->name('Poducto.store');
 
 
 Route::resource('clientes', ClienteController::class);
 Route::resource('productos', ProductoController::class);
-Route::resource('facturas', FacturaController::class);
+Route::resource('facturas', FacturaController::class); 

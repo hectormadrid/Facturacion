@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Cliente;
 use Illuminate\Http\Request;
 
 class ClienteController extends Controller
@@ -34,7 +34,14 @@ class ClienteController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'rut' => 'required|unique:clientes',
+            'nombre' => 'required',
+            'email' => 'required|email',
+            'telefono' => 'required',
+        ]);
+        Cliente::create($request->all());
+        return redirect()->route('Cliente')->with('success', 'Cliente registrado exitosamente');
     }
 
     /**

@@ -13,11 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('facturas', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('cliente_id')->constrained();
-            $table->date('fecha');
-            $table->decimal('total', 8, 2);
+        Schema::create('productos', function (Blueprint $table) {
+            $table->id('id');
+            $table->string('nombre');
+            $table->text('descripcion')->nullable();
+            $table->decimal('precio', 10, 2);
+            $table->integer('stock');
+            $table->string('categoria')->nullable();
+            $table->string('unidad_medida')->nullable();
             $table->timestamps();
         });
     }
