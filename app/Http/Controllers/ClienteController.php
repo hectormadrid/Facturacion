@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Cliente;
 use Illuminate\Http\Request;
 
@@ -13,7 +14,8 @@ class ClienteController extends Controller
      */
     public function index()
     {
-        //
+        $clientes = Cliente::all(); // Obtener todos los clientes
+        return view('Cliente.createC', compact('clientes'));
     }
 
     /**
@@ -21,10 +23,7 @@ class ClienteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
-    }
+    public function create() {}
 
     /**
      * Store a newly created resource in storage.
@@ -40,8 +39,10 @@ class ClienteController extends Controller
             'email' => 'required|email',
             'telefono' => 'required',
         ]);
+
+
         Cliente::create($request->all());
-        return redirect()->route('Cliente')->with('success', 'Cliente registrado exitosamente');
+        return redirect()->route('Cliente.index')->with('success', 'Cliente registrado exitosamente');
     }
 
     /**
@@ -61,9 +62,10 @@ class ClienteController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($rut)
     {
-        //
+        $cliente = Cliente::find($rut); // Buscar el cliente por ID
+        return view('Cliente.createC', compact('cliente'));
     }
 
     /**
@@ -75,7 +77,16 @@ class ClienteController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // Validar los datos del formulario
+        $request->validate([
+            'rut' => 'required|unique:clientes,rut,' . $id, // Ignorar el RUT actual del cliente
+            'nombre' => 'required',
+            'email' => 'required|email',
+            'telefono' => 'required',
+            'direccion' => 'required',
+            'comuna' => 'required',
+
+        ]);
     }
 
     /**

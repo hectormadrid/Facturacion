@@ -13,7 +13,7 @@ class ProductoController extends Controller
      */
     public function index()
     {
-        //
+        
     }
 
     /**
@@ -42,7 +42,7 @@ class ProductoController extends Controller
 
         Producto::create($request->all());
 
-        return redirect()->route('productos.index')->with('success', 'Producto registrado exitosamente');
+        return redirect()->route('Producto')->with('success', 'Producto registrado exitosamente');
     }
 
     /**

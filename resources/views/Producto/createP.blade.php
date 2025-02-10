@@ -4,9 +4,15 @@
 <div class="container mx-auto px-4 py-8">
     <h2 class="text-2xl font-bold mb-6 text-gray-800 text-center">Registro de Producto</h2>
     
-    <form action="#" method="POST" class="bg-white shadow-md rounded-lg px-8 pt-6 pb-8 mb-4 max-w-2xl mx-auto">
+    <form action="{{route('Producto.store')}}" method="POST" class="bg-white shadow-md rounded-lg px-8 pt-6 pb-8 mb-4 max-w-2xl mx-auto">
         @csrf
-        
+        @if (session('success'))
+        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" role="alert">
+            <strong class="font-bold">¡Éxito!</strong>
+            <span class="block sm:inline">{{ session('success') }}</span>
+        </div>
+            
+        @endif
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             
             <div class="mb-4">
@@ -74,7 +80,7 @@
         </div>
 
         <div class="flex items-center justify-end mt-6">
-            <a href="{{ route('productos.index') }}" 
+            <a href="{{ route('Producto') }}" 
                 class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-4">
                 Cancelar
             </a>

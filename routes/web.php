@@ -21,19 +21,24 @@ Route::get('/', function () {
 });
 
 Route::get('/Cliente', function () {
-    return view('Cliente.create');
-});
-Route::get('/Producto', function () {
-    return view('Producto.create');
-});
-Route::get('/Cliente/create', [ClienteController::class, 'create'])->name('Cliente.create');
+    return view('Cliente.createC');
+})->name('Cliente');
 
+Route::get('/Producto', function () {
+    return view('Producto.createP');
+})->name('Producto');
+
+Route::get('/Cliente', [ClienteController::class, 'index'])->name('Cliente.index');
 Route::post('/Cliente', [ClienteController::class, 'store'])->name('Cliente.store');
 
-Route::get('/Producto/create', [ProductoController::class, 'create'])->name('Producto.create');
-Route::post('/Productos', [ProductoController::class, 'store'])->name('Poducto.store');
+// Mostrar el formulario de edición
+Route::get('/Cliente/{rut}/edit', [ClienteController::class, 'edit'])->name('Cliente.edit');
 
+// Procesar la actualización del cliente
+Route::put('/Cliente/{rut}', [ClienteController::class, 'update'])->name('Cliente.update');
 
-Route::resource('clientes', ClienteController::class);
-Route::resource('productos', ProductoController::class);
-Route::resource('facturas', FacturaController::class); 
+// Eliminar un cliente
+Route::delete('/Cliente/{rut}', [ClienteController::class, 'destroy'])->name('Cliente.destroy');
+
+Route::post('/Producto', [ProductoController::class, 'store'])->name('Producto.store');
+
