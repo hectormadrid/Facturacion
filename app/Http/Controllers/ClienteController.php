@@ -65,21 +65,22 @@ class ClienteController extends Controller
     public function edit($rut)
     {
         $cliente = Cliente::find($rut); // Buscar el cliente por ID
-        return view('Cliente.createC', compact('cliente'));
+        return view('Cliente.show', compact('cliente'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  int  $rut
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $rut)
     {
         // Validar los datos del formulario
         $request->validate([
-            'rut' => 'required|unique:clientes,rut,' . $id, // Ignorar el RUT actual del cliente
+
+            'rut' => 'required|unique:clientes,rut,' . $rut, // Ignorar el RUT actual del cliente
             'nombre' => 'required',
             'email' => 'required|email',
             'telefono' => 'required',
@@ -87,6 +88,15 @@ class ClienteController extends Controller
             'comuna' => 'required',
 
         ]);
+
+        // Buscar el cliente por RUT
+        $cliente = Cliente::find($rut);
+
+        // Actualizar los datos del cliente
+        $cliente->update($request->all());
+
+        // Redirigir con un mensaje de éxito
+        return redirect()->route('cliente.index')->with('success', 'Cliente actualizado exitosamente');
     }
 
     /**
@@ -97,6 +107,10 @@ class ClienteController extends Controller
      */
     public function destroy($id)
     {
-        //
+    // Buscar el cliente por ID
+    $cliente = Cliente::find($id);
+    $cliente->delete();
+    return redirect()->route('Cliente.index')->with('success', 'Cliente eliminado exitosamente');
+    
     }
 }
