@@ -20,12 +20,12 @@
         <div class="container mx-auto flex justify-between items-center">
             <a href="/" class="text-white text-xl font-bold">Facturación</a>
             <div class="hidden md:flex space-x-4">
-                <a href="Cliente" class="text-white hover:bg-blue-500 px-3 py-2 rounded">Clientes</a>
+            <a href="{{ route('Cliente.index') }}" class="text-white hover:bg-blue-500 px-3 py-2 rounded">Clientes</a>
                 <a href="Producto" class="text-white hover:bg-blue-500 px-3 py-2 rounded">Productos</a>
                 <a href="#" class="text-white hover:bg-blue-500 px-3 py-2 rounded">Facturas</a>
             </div>
             <button id="menu-toggle" class="md:hidden text-white focus:outline-none">
-                ☰
+                
             </button>
         </div>
 

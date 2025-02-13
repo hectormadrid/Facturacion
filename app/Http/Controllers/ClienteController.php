@@ -65,7 +65,8 @@ class ClienteController extends Controller
     public function edit($rut)
     {
         $cliente = Cliente::find($rut); // Buscar el cliente por ID
-        return view('Cliente.show', compact('cliente'));
+       
+        return view('Cliente.showC',['cliente' => $cliente]); // Pasar el cliente a la vista de edición
     }
 
     /**
@@ -79,14 +80,13 @@ class ClienteController extends Controller
     {
         // Validar los datos del formulario
         $request->validate([
-
-            'rut' => 'required|unique:clientes,rut,' . $rut, // Ignorar el RUT actual del cliente
+            'rut' => 'required|unique:clientes,rut,' . $rut .',rut', // Usar 'rut' como clave primaria
             'nombre' => 'required',
             'email' => 'required|email',
             'telefono' => 'required',
             'direccion' => 'required',
-            'comuna' => 'required',
-
+            'ciudad' => 'required',
+            'tipo_cliente' => 'required',
         ]);
 
         // Buscar el cliente por RUT
@@ -95,8 +95,11 @@ class ClienteController extends Controller
         // Actualizar los datos del cliente
         $cliente->update($request->all());
 
+       
+
+        $cliente->save();
         // Redirigir con un mensaje de éxito
-        return redirect()->route('cliente.index')->with('success', 'Cliente actualizado exitosamente');
+        return redirect()->route('Cliente.index')->with('success', 'Cliente actualizado exitosamente');
     }
 
     /**
@@ -105,10 +108,10 @@ class ClienteController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($rut)
     {
     // Buscar el cliente por ID
-    $cliente = Cliente::find($id);
+    $cliente = Cliente::find($rut);
     $cliente->delete();
     return redirect()->route('Cliente.index')->with('success', 'Cliente eliminado exitosamente');
     

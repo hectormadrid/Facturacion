@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Producto;
 use Illuminate\Http\Request;
 
@@ -13,7 +14,8 @@ class ProductoController extends Controller
      */
     public function index()
     {
-        
+        $productos = Producto::all();
+        return view('Producto.createP', compact('productos'));
     }
 
     /**
@@ -64,7 +66,8 @@ class ProductoController extends Controller
      */
     public function edit($id)
     {
-        //
+        $producto = Producto::find($id);
+        return view('Producto.showP', compact('producto'));
     }
 
     /**
@@ -76,7 +79,16 @@ class ProductoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'nombre' => 'required',
+            'precio' => 'required|numeric',
+            'stock' => 'required|numeric',
+        ]);
+
+        $producto = Producto::find($id);
+        $producto->update($request->all());
+
+        return redirect()->route('Producto.index')->with('success', 'Producto actualizado exitosamente');
     }
 
     /**
@@ -87,6 +99,9 @@ class ProductoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $producto = Producto::find($id);
+        $producto->delete();
+
+        return redirect()->route('productos.index')->with('success', 'Producto eliminado exitosamente');
     }
 }
